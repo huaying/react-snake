@@ -96,7 +96,8 @@ export default class Game extends React.PureComponent {
       39: DIR.RIGHT,
       40: DIR.DOWN
     };
-    this.changeDirection(DIRMap[e.keyCode]);
+
+    if (DIRMap[e.keyCode]) this.changeDirection(DIRMap[e.keyCode]);
   };
 
   changeDirection = dir => {
