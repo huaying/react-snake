@@ -130,16 +130,15 @@ export default class Game extends React.PureComponent {
   getNextPos = (snake, snakeDir) => {
     const head = snake[snake.length - 1];
     const [i, j] = [head[0] + snakeDir[0], head[1] + snakeDir[1]];
-    const isEmpty =
-      i >= 0 &&
-      i < NUM_ROW &&
-      j >= 0 &&
-      j < NUM_COLUMN &&
-      snake.every(pos => pos.toString() !== [i, j].toString());
+    const inBoard = i >= 0 && i < NUM_ROW && j >= 0 && j < NUM_COLUMN;
 
-    const [tailY, tailX] = snake[0];
-    const isTail = i === tailY && j === tailX;
-    return isEmpty && !isTail ? [i, j] : null;
+    const isBody =
+      snake.length > 1 &&
+      snake.some(
+        (pos, idx) => idx !== 0 && pos.toString() === [i, j].toString()
+      );
+
+    return inBoard && !isBody ? [i, j] : null;
   };
 
   generateFood = () => {
